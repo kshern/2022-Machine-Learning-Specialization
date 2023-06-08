@@ -1,0 +1,220 @@
+In the last video,
+you saw how to use the test set to evaluate
+the performance of a model. Let's make one
+further refinement to that idea in this video, which allow you to
+use the technique, to automatically
+choose a good model for your machine
+learning algorithm. One thing we've
+seen is that once the model's parameters w and b have been fit to
+the training set. The training error may not be a good indicator of how
+well the algorithm will do or how well it
+will generalize to new examples that were
+not in the training set, and in particular,
+for this example, the training error will
+be pretty much zero. That's likely much lower than the actual generalization error, and by that I mean
+the average error on new examples that were
+not in the training set. What you saw on the
+last video is that J test the performance of
+the algorithm on examples, is not trained on, that will be a
+better indicator of how well the model will
+likely do on new data. By that I mean other data
+that's not in the training set. Let's take a look at
+how this affects, how we might use a test set to choose a model for a given
+machine learning application. If a fitting a function to predict housing prices or some
+other regression problem, one model you might consider is to fit a linear
+model like this. This is a first-order
+polynomial and we're going to use d equals 1 on this slide to denote fitting a one or
+first-order polynomial. If you were to fit a model like this to
+your training set, you get some
+parameters, w and b, and you can then compute J tests to estimate how well does this
+generalize to new data? On this slide, I'm
+going to use w^1, b^1 to denote that these
+are the parameters you get if you were to fit a
+first order polynomial, a degree one, d
+equals 1 polynomial. Now, you might also consider fitting a second-order
+polynomial or quadratic model, so this is the model. If you were to fit this
+to your training set, you would get some
+parameters, w^2, b^2, and you can then
+similarly evaluate those parameters on your
+test set and get J test w^2, b^2, and this will give
+you a sense of how well the second-order
+polynomial does. You can go on to try d equals 3, that's a third order or a degree three polynomial
+that looks like this, and fit parameters and
+similarly get J test. You might keep doing this until, say you try up to a 10th
+order polynomial and you end up with J test
+of w^10, b^10. That gives you a
+sense of how well the 10th order
+polynomial is doing. One procedure you could try, this turns out not to
+be the best procedure, but one thing you could try is, look at all of these J tests, and see which one gives
+you the lowest value. Say, you find that, J test for the fifth
+order polynomial for w^5, b^5 turns out to be the lowest. If that's the case, then
+you might decide that the fifth order polynomial
+d equals 5 does best, and choose that model
+for your application. If you want to estimate how
+well this model performs, one thing you could do, but this turns out to be a
+slightly flawed procedure, is to report the test set error, J test w^5, b^5. The reason this procedure
+is flawed is J test of w^5, b^5 is likely to be an optimistic estimate of
+the generalization error. In other words, it
+is likely to be lower than the actual
+generalization error, and the reason is, in the procedure we talked
+about on this slide with basic fits, one
+extra parameter, which is d, the
+degree of polynomial, and we chose this parameter
+using the test set. On the previous slide, we saw
+that if you were to fit w, b to the training data, then the training data would be an overly optimistic estimate
+of generalization error. It turns out too, that if
+you want to choose the parameter d using the test set, then the test set J test is
+now an overly optimistic, that is lower than
+actual estimate of the generalization error. The procedure on this
+particular slide is flawed and I don't
+recommend using this. Instead, if you want to
+automatically choose a model, such as decide what
+degree polynomial to use. Here's how you modify
+the training and testing procedure in order to
+carry out model selection. Whereby model selection, I mean choosing amongst
+different models, such as these 10 different
+models that you might contemplate using for your
+machine learning application. The way we'll modify the
+procedure is instead of splitting your data
+into just two subsets, the training set
+and the test set, we're going to split your data into three different subsets, which we're going to
+call the training set, the cross-validation set,
+and then also the test set. Using our example from before of these 10 training examples, we might split it into putting 60 percent
+of the data into the training set and so the notation we'll use for the training set portion
+will be the same as before, except that now M train, the number of training
+examples will be six and we might put 20
+percent of the data into the cross-validation set and a notation I'm going
+to use is x_cv of one, y_cv of one for the first
+cross-validation example. So cv stands for
+cross-validation, all the way down to x_cv
+of m_cv and y_cv of m_cv. Where here, m_cv equals
+2 in this example, is the number of
+cross-validation examples. Then finally we have the
+test set same as before, so x1 through x m tests
+and y1 through y m, where m tests equal to 2. This is the number
+of test examples. We'll see you on the
+next slide how to use the cross-validation set. The way we'll modify
+the procedure is you've already seen
+the training set and the test set and we're
+going to introduce a new subset of the data called
+the cross-validation set. The name cross-validation
+refers to that this is an extra dataset
+that we're going to use to check or trust check the validity or really the
+accuracy of different models. I don t think it's a great name, but that is what people
+in machine learning have gotten to call
+this extra dataset. You may also hear people call this the validation
+set for short, it's just fewer syllables than cross-validation or
+in some applications, people also call this
+the development set. Means basically the same
+thing or for short. Sometimes you hear people
+call this the dev set, but all of these terms mean the same thing as
+cross-validation set. I personally use the term dev set the most often because
+it's the shortest, fastest way to say it but
+cross-validation is pretty used a little bit more often by machine learning
+practitioners. Onto these three subsets
+of the data training set, cross-validation
+set, and test set, you can then compute the training error, the
+cross-validation error, and the test error using
+these three formulas. Whereas usual, none of
+these terms include the regularization term that is included in the
+training objective, and this new term in the middle, the cross-validation error
+is just the average over your m_cv
+cross-validation examples of the average say,
+squared error. This term, in addition to being called
+cross-validation error, is also commonly called the
+validation error for short, or even the development set
+error, or the dev error. Armed with these three measures of learning algorithm
+performance, this is how you can then go about carrying out
+model selection. You can, with the 10 models, same as earlier on this slide, with d equals 1, d equals 2, all the way up to a 10th degree or the
+10th order polynomial, you can then fit the
+parameters w_1, b_1. But instead of evaluating
+this on your test set, you will instead evaluate
+these parameters on your cross-validation sets
+and compute J_cv of w1, b1, and similarly, for the second model, we get J_cv of w2, v2, and all the way down
+to J_cv of w10, b10. Then, in order to
+choose a model, you will look at which model has the lowest
+cross-validation error, and concretely, let's
+say that J_cv of w4, b4 as low as, then what that means is you pick this fourth-order polynomial as the model you will use
+for this application. Finally, if you want to
+report out an estimate of the generalization error of how well this model will
+do on new data. You will do so using that
+third subset of your data, the test set and you
+report out Jtest of w4,b4. You notice that throughout
+this entire procedure, you had fit these parameters
+using the training set. You then chose the parameter
+d or chose the degree of polynomial using the
+cross-validation set and so up until this point, you've not fit any parameters, either w or b or d to the test set and that's why
+Jtest in this example will be fair estimate of the generalization error of this model thus
+parameters w4,b4. This gives a better procedure for model selection
+and it lets you automatically make a
+decision like what order polynomial to choose for your
+linear regression model. This model selection
+procedure also works for choosing among
+other types of models. For example, choosing a
+neural network architecture. If you are fitting a model for handwritten
+digit recognition, you might consider
+three models like this, maybe even a larger set of
+models than just me but here are a few different
+neural networks of small, somewhat larger, and
+then even larger. To help you decide
+how many layers do the neural network have and how many hidden units per
+layer should you have, you can then train all
+three of these models and end up with parameters w1, b1 for the first model, w2, b2 for the second model, and w3,b3 for the third model. You can then evaluate the neural networks
+performance using Jcv, using your cross-validation set Since this is a
+classification problem, Jcv the most common choice
+would be to compute this as the fraction of
+cross-validation examples that the algorithm
+has misclassified. You would compute this using all three models and then pick the model with the lowest
+cross validation error. If in this example, this has the lowest
+cross validation error, you will then pick the second
+neural network and use parameters trained on
+this model and finally, if you want to report out an estimate of the
+generalization error, you then use the test set to estimate how well
+the neural network that you just chose will do. It's considered best
+practice in machine learning that if you have to make
+decisions about your model, such as fitting parameters or choosing the model architecture, such as neural network
+architecture or degree of polynomial if you're fitting
+a linear regression, to make all those
+decisions only using your training set and your
+cross-validation set, and to not look at the test
+set at all while you're still making decisions regarding
+your learning algorithm. It's only after
+you've come up with one model as your final
+model to only then evaluate it on the test set and because you haven't made any decisions using the test set, that ensures that
+your test set is a fair and not overly
+optimistic estimate of how well your model will
+generalize to new data. That's model
+selection and this is actually a very widely
+used procedure. I use this all the
+time to automatically choose what model to use for a given machine
+learning application. Earlier this week, I mentioned
+running diagnostics to decide how to improve the performance of a
+learning algorithm. Now that you have
+a way to evaluate learning algorithms and even automatically choose a model, let's dive more deeply into
+examples of some diagnostics. The most powerful diagnostic that I know of and that
+I used for a lot of machine learning
+applications is one called bias and variance. Let's take a look at what
+that means in the next video.
+
+在上一个视频中，你学习了如何使用测试集来评估模型的性能。在本视频中，我们将对这个思想进行进一步的改进，使你能够使用该技术来自动选择适合你的机器学习算法的模型。我们已经看到，一旦模型的参数w和b适合训练集，训练误差可能不是一个很好的指标来衡量算法的表现，也不能很好地推广到不在训练集中的新样本上。特别地，对于这个例子，训练误差将会接近于零。这可能比实际的泛化误差低得多，泛化误差是指在没有被训练集覆盖的新样本上的平均误差。正如你在上一个视频中所看到的，用J test衡量算法在未被训练的样本上的性能，将是衡量模型在新数据上表现良好的更好指标。
+
+
+这里指的是不在训练集中的其他数据。让我们来看看这如何影响我们如何使用测试集来选择给定机器学习应用的模型。如果要拟合一个用于预测房价或其他回归问题的函数，你可能会考虑拟合一个线性模型，如下所示。这是一个一阶多项式，我们将在本幻灯片中使用d=1来表示拟合一阶多项式。如果你将这样的模型拟合到你的训练集中，你将得到一些参数w和b，然后可以计算J test来估计这个模型的泛化能力如何？在本幻灯片中，我将使用w^1、b^1来表示，这些是如果你拟合一个一阶多项式，即d等于1的多项式所得到的参数。现在，你可能还考虑拟合一个二阶多项式或二次模型，如下所示。如果你将其拟合到你的训练集中，你将得到一些参数w^2、b^2，然后可以在测试集上进行类似的评估，并获得J test w^2、b^2，这将给你一个关于二阶多项式的表现如何的概念。你可以继续尝试d等于3，这是一个三阶或三次多项式，看起来像这样，并拟合参数，并类似地获得J test。
+
+你可以一直尝试，直到尝试到10阶多项式，然后得到J test w^10、b^10。这会让你知道10阶多项式的表现如何。你可以尝试的一个程序（这不是最佳程序），是查看所有这些J test，并找到给你最低值的那个。比如说，你发现w^5、b^5的第五阶多项式的J test是最低的。如果是这样的话，你可能会决定第五阶多项式d等于5的表现最好，并选择该模型用于你的应用程序。如果你想估计这个模型的表现，你可以这样做，但这个程序有些缺陷，即报告测试集误差J test w^5、b^5。这个程序有缺陷的原因是，J test w^5、b^5很可能是一种乐观的泛化误差估计。换句话说，它很可能比实际的泛化误差低，并且原因是，在这个幻灯片上讨论的基本拟合程序中，有一个额外的参数d，即多项式的次数，我们使用测试集选择了这个参数。
+在之前的幻灯片中，我们看到如果你将w、b拟合到训练数据中，那么训练数据将是一个过于乐观的泛化误差估计。同样，如果你想使用测试集选择参数d，则测试集J test现在是一种过于乐观的泛化误差估计，即低于实际的泛化误差估计。这个特定幻灯片上的程序是有缺陷的，我不建议使用它。相反，如果你想自动选择一个模型，比如决定使用什么阶多项式，那么这里是如何修改训练和测试过程以进行模型选择的。其中模型选择是指在不同的模型中进行选择，比如你可能考虑在你的机器学习应用程序中使用这10个不同的模型之一。我们将修改的方法是，将你的数据分成三个不同的子集，分别称为训练集、交叉验证集和测试集，而不是仅将数据分成两个子集，即训练集和测试集。
+
+
+在之前的例子中，我们有10个训练样本，我们可以将其中60%的数据放入训练集中。我们将使用与之前相同的符号表示训练集部分，只是现在训练示例的数量M_train将是6。我们可能将20%的数据放入交叉验证集中，我将使用的符号是x_cv1、y_cv1表示第一个交叉验证示例。这里的cv代表交叉验证，一直到x_cv_mcv和y_cv_mcv。在这个例子中，mcv等于2，是交叉验证示例的数量。最后，我们有与之前相同的测试集，即x1到xm_tests和y1到ym_tests，其中m_tests等于2，是测试示例的数量。在下一张幻灯片中，我们将看到如何使用交叉验证集。我们将修改的方法是，除了训练集和测试集之外，引入一个新的数据子集，称为交叉验证集。交叉验证的名称指的是这是一个额外的数据集，我们将使用它来检查或验证不同模型的有效性或准确性。
+
+
+我认为这不是一个很好的名称，但这就是机器学习中人们称呼这个额外数据集的方式。你也可能听到人们简称它为验证集，这比交叉验证的音节少一些，在某些应用中，人们也称之为开发集。基本上是指同一件事情，有时人们也称之为dev集，但所有这些术语的意思都与交叉验证集相同。我个人最常用的术语是dev集，因为它是最短、最快的说法，但是交叉验证在机器学习实践者中使用得更多一些。对于这三个数据子集，训练集、交叉验证集和测试集，可以使用这三个公式计算训练误差、交叉验证误差和测试误差。与通常一样，这些术语都不包括训练目标中包含的正则化项，并且中间的新术语交叉验证误差只是你的m_cv个交叉验证示例的平均均方误差。
+
+除了被称为交叉验证误差外，这个术语也常被简称为验证误差，甚至是开发集误差或dev误差。有了这三个学习算法性能的度量，这就是你如何进行模型选择的方法。你可以使用和之前幻灯片上一样的10个模型，例如d等于1、d等于2，一直到10阶多项式，然后拟合参数w1、b1。但是，你不会在测试集上评估这些参数，而是在交叉验证集上评估这些参数，并计算J_cv(w1，b1)，对于第二个模型，我们得到J_cv(w2，b2)，一直到J_cv(w10，b10)。然后，为了选择一个模型，你将查看哪个模型具有最低的交叉验证误差，具体来说，假设J_cv(w4，b4)最低，那么这意味着你选择这个四阶多项式作为你将用于此应用程序的模型。最后，如果你想报告一个估计的泛化误差，即该模型在新数据上的表现如何，你将使用你数据的第三个子集，即测试集，并报告出J_test(w4，b4)。
+
+
+在整个过程中，你注意到你使用训练集来拟合这些参数。然后使用交叉验证集选择参数d或选择多项式的阶数。到目前为止，你还没有将任何参数w、b或d拟合到测试集上，这就是为什么在此示例中Jtest将是该模型的泛化误差的公正估计。这提供了更好的模型选择过程，让你自动决定选择哪个多项式阶数用于你的线性回归模型。此模型选择过程也适用于选择其他类型的模型。例如，选择神经网络架构。如果你正在为手写数字识别拟合模型，你可能会考虑这三种模型，甚至比我列出的更多，这里有几个不同的小型、稍大一些、甚至更大的神经网络模型。为了帮助你决定神经网络应该有多少层以及每层应该有多少隐藏单元，你可以训练所有三个模型，并得出第一个模型的参数w1、b1，第二个模型的参数w2、b2和第三个模型的参数w3、b3。然后，你可以使用Jcv评估神经网络的性能，使用交叉验证集。由于这是一个分类问题，Jcv的最常见选择是将其计算为算法误分类的交叉验证示例的比例。
+
+你将使用所有三个模型计算Jcv，然后选择具有最低交叉验证误差的模型。如果在此示例中，第二个神经网络具有最低的交叉验证误差，那么你将选择第二个神经网络，并使用在该模型上训练的参数。最后，如果你想报告一个泛化误差的估计值，你可以使用测试集来估计你刚刚选择的神经网络的表现如何。在机器学习中，认为最佳实践是如果你需要对模型进行决策，例如拟合参数或选择模型架构，例如神经网络架构或如果你正在拟合线性回归，则选择多项式的阶数，应仅使用你的训练集和交叉验证集来做出所有这些决策，并在决策你的学习算法时不要查看测试集。只有在你确定一个模型作为最终模型之后，才对其进行测试集评估，并且因为你没有使用测试集进行任何决策，这确保了你的测试集是一个公正的、不过度乐观的估计，它可以很好地泛化到新数据。这就是模型选择，实际上这是一个非常广泛使用的过程。
+
+我经常使用这种方法来自动选择用于给定机器学习应用程序的模型。本周早些时候，我提到过运行诊断来决定如何提高学习算法的性能。现在，你有了一种评估学习算法并甚至自动选择模型的方法，让我们更深入地探讨一些诊断的示例。我知道的最强大的诊断方法，也是我在许多机器学习应用中使用的方法，叫做偏差和方差。让我们在下一个视频中看看它的含义。

@@ -1,0 +1,163 @@
+Let's see,
+you've trained a machine learning model. How do you evaluate that
+model's performance? You find that having a systematic way to
+evaluate performance will also hope paint a clearer path for
+how to improve his performance. So let's take a look at
+how to evaluate the model. 
+你已经训练了一个机器学习模型。你如何评估模型的性能？你发现有一个系统的评估性能的方法也可以帮助你更清晰地了解如何提高它的性能。所以让我们看一下如何评估模型的性能。
+
+Let's take the example of learning
+to predict housing prices as a function of the size. Let's say you've trained the model
+to predict housing prices as a function of the size x. And for the model that is
+a fourth order polynomial. So features x, x squared,
+execute and x to the 4. Because we fit 1/4 order polynomial to
+a training set with five data points, this fits the training data really well. But, we don't like this model
+very much because even though the model fits the training data well, we think it will fail to generalize to new
+examples that aren't in the training set. 
+
+以学习预测房价为例，假设你已经训练了一个模型，该模型将房价作为房屋面积x的函数进行预测。该模型是一个四次多项式，包括特征x、x的平方、x的三次方和x的四次方。由于我们将1/4次多项式拟合到仅有五个数据点的训练集上，模型在训练数据上的表现非常好。但是，我们并不喜欢这个模型，因为虽然它能够很好地拟合训练数据，但我们认为它在无法推广到不在训练集中的新实例时会失败。
+So, when you are predicting prices, just
+a single feature at the size of the house, you could plot the model like this and we
+could see that the curve is very wiggly so we know this parody isn't a good model. But if you were fitting this
+model with even more features, say we had x1 the size of house,
+number of bedrooms, the number of floors of the house,
+also the age of the home in years, then it becomes much harder to plot f because
+f is now a function of x1 through x4. And how do you plot a four
+dimensional function? 
+因此，当你预测房价时，只使用房屋面积这一个特征时，你可以将模型绘制成这样，我们可以看到曲线非常扭曲，因此我们知道这个模型不是一个好模型。但是，如果你用更多的特征来拟合这个模型，比如房屋面积x1、卧室数量、房屋楼层数、房屋年龄等，那么绘制f函数就变得更加困难，因为f现在是由x1到x4这四个变量组成的函数。那么如何绘制一个四维函数的图像呢？
+So in order to tell if your model is doing
+well, especially for applications where you have more than one or two features,
+which makes it difficult to plot f of x. We need some more systematic way to
+evaluate how well your model is doing. Here's a technique that you can use. If you have a training set and this is
+a small training set with just 10 examples listed here, rather than taking all
+your data to train the parameters w and p of the model, you can instead split
+the training set into two subsets. 
+因此，为了确定你的模型是否表现良好，特别是在有多个特征的应用程序中，这使得绘制f(x)变得困难，我们需要一些更系统的方法来评估模型的性能。这里有一个技巧，你可以使用。如果你有一个训练集，这是一个只有10个示例的小训练集，在训练模型参数w和p时，你可以将训练集拆分为两个子集。
+I'm going to draw a line here, and
+let's put 70% of the data into the first part and
+I'm going to call that the training set. And the second part of the data,
+let's say 30% of the data, I'm going to put into it has set. And what we're going to
+do is train the models, parameters on the training set on
+this first 70% or so of the data, and then we'll test his
+performance on this test set. In notation, I'm going to use x1, y1? Same as before, to denote
+the training examples through xm, ym, except that now to make explicit. So in this little example we would
+have seven training example.
+
+我要在这里画一条线，将数据的70%放入第一部分，我称之为训练集。再将数据的30%放入测试集。我们将在训练集上训练模型的参数，然后在测试集上测试模型的性能。符号上，我将使用x1，y1到xm，ym，与以前一样，表示训练示例，以明确表示。在这个小例子中，我们将有七个训练示例。
+And to introduce one
+new piece of notation, I'm going to use m subscript train. M train is a number of training examples
+which in this small dataset is 7. So the subscript train just
+emphasizes if we're looking at the training set portion of the data. And for the test set, I'm going to use
+the notation x1 subscript test comma y1, subscript test to denote
+the first test example, and this goes all the way to
+x mtest subscript tests, y mtest subscript tests and m tests is the number of test
+examples, which in this case is 3. 
+为了引入一个新的符号表示，我将使用m subscript train。M train是训练示例的数量，在这个小数据集中是7。下标train强调了我们正在查看数据的训练集部分。对于测试集，我将使用符号x1 subscript test，y1 subscript test表示第一个测试示例，一直到x mtest subscript tests，y mtest subscript tests，其中m tests是测试示例的数量，在这种情况下是3。
+And it's not uncommon to split your
+dataset according to maybe a 70, 30 split or 80, 20 split with most of
+your data going into the training set, and then a smaller fraction
+going into the test set. So, in order to train a model and
+evaluated it, this is what it would look like if you're using linear
+regression with a squared error cost. Start off by fitting the parameters by
+minimizing the cost function j of w,b. So this is the usual cost
+function minimize over w,b of this square error cost,
+plus regularization term longer over 2m times
+some of the w,j squared. 
+
+常见的做法是按照70:30或80:20的比例拆分数据集，其中大部分数据用于训练集，较小部分用于测试集。因此，为了训练模型并进行评估，如果你使用带有平方误差代价的线性回归，它看起来会是这样的。首先，通过最小化代价函数j(w,b)来拟合参数。这是通常的代价函数，最小化w,b的平方误差代价，加上正则化项lambda over 2m乘以w,j平方和。
+
+And then to tell how well this model is
+doing, you would compute J test of w,b, which is equal to the average
+error on the test set, and that's just equal to 1/2 times m test. That's the number of test examples. And then of some overall the examples
+from r equals 1, to the number of test examples of the squared era
+on each of the test examples like so. So it's a prediction on the if
+test example input minus the actual price of the house
+on the test example squared. And notice that the test
+error formula J test, it does not include that
+regularization term. And this will give you a sense of how
+well your learning algorithm is doing. 
+为了评估模型的性能，需要计算J test(w,b)，它等于测试集上的平均误差，即1/2乘以m test（测试示例的数量），再加上所有测试示例的平方误差的总和，其中r从1到测试示例的数量。公式为：对于每个测试示例，计算模型对该测试示例的输入的预测值与实际房屋价格之间的差值，然后对该差值进行平方。需要注意的是，测试误差公式J test不包括正则化项。这将让你了解你的学习算法的表现如何。
+One of the quantity that's often
+useful to computer as well as the training error,
+which is a measure of how well you're learning album is doing
+on the training set. So let me define J train of w,b
+to be equal to the average over the training set. 1 over to 2m, or 1/2 m subscript train of some over your training set
+of this squared error term. And once again, this does not include
+the regularization term unlike the cost function that you are minimizing
+to fit the parameters. So, in the model like what we
+saw earlier in this video, J train of w,b will be low
+because the average era on your training examples will be zero or
+very close to zero. 
+
+
+在机器学习中，经常需要计算训练误差，它是衡量算法在训练集上表现如何的一种指标。定义J train(w,b)为训练集上的平均误差，即1/2乘以m subscript train的训练集上的平方误差之和。与J test不同，J train不包括正则化项。对于之前在视频中看到的模型，J train(w,b)应该很低，因为训练样本的平均误差应该为零或非常接近于零。
+
+
+So J train will be very close to zero. But if you have a few additional examples
+in your test set that the album had not trained on, then those test examples,
+my love life these. And there's a large gap between what
+the album is predicting as the estimated housing price, and
+the actual value of those housing prices. And so, J tests will be high. So seeing that J test is high on this
+model, gives you a way to realize that even though it does great on the training
+set, is actually not so good at generalizing to new examples to new data
+points that were not in the training set. So, that was regression
+with squared error cost. Now, let's take a look at how you apply
+this procedure to a classification problem. For example, if you are classifying
+between handwritten digits that are either 0 or
+1,, so same as before, you fit the parameters by minimizing the
+cost function to find the parameters w,b. 
+
+J train将非常接近于零。但是，如果测试集中有一些算法没有训练过的额外示例，那么这些测试示例可能会导致J test很高。这意味着模型在训练集上表现良好，但实际上在推广到新的数据点时并不理想。那么这是带有平方误差代价的回归问题。现在，让我们看一下如何将这个过程应用到分类问题上。例如，如果你要对手写数字0或1进行分类，那么与之前一样，你需要通过最小化代价函数来拟合参数w,b。
+
+For example,
+if you were training logistic regression, then this would be the cost function
+J of w,b, where this is the usual logistic loss function, and
+then plus also the regularization term. And to compute the test error,
+J test is then the average over your test examples,
+that's that 30% of your data that wasn't in the training set of the logistic
+loss on your test set. And the training error you can
+also compute using this formula, is the average logistic loss
+on your training data that the album was using to minimize
+the cost function J of w, b. Well, when I described here will work,
+okay, for figuring out if your learning algorithm is doing well, by seeing how
+I was doing in terms of test error. When applying machine learning
+to classification problems, there's actually one other
+definition of J tests and J train that is maybe
+even more commonly used. 
+
+如果你正在训练逻辑回归，那么代价函数J(w,b)将是通常的逻辑损失函数加上正则化项。计算测试误差J test的公式是将你的测试示例（即不在训练集中的30%的数据）代入到逻辑损失函数中求平均值。训练误差也可以用公式计算，即将你的训练数据代入到逻辑损失函数中求平均值，这些数据是用来训练算法并最小化代价函数J(w,b)的。
+
+
+这些公式可以用来判断学习算法的性能如何，通过观察测试误差的表现。在应用机器学习到分类问题时，还有另一种常用的定义J test和J train的方法。
+
+Which is instead of using the logistic
+loss to compute the test error and the training error to instead measure
+what the fraction of the test set, and the fraction of the training set
+that the algorithm has misclassified. So specifically on the test set,
+you can have the algorithm make a prediction 1 orhttps://www.coursera.org/learn/advanced-learning-algorithms/lecture/26yGi/evaluating-a-model
+0 on every test example. So, recall y_hat we would predict us
+1 if f of x is greater than equal 4.5, and zero if it's less than 0.5. And you can then count up in the test
+set the fraction of examples where y_hat is not equal to the actual
+ground truth label while in the test set. So concretely, if you are classifying
+handwritten digits 0, 1 by new classification toss, then J tests
+would be the fraction of that test set, where 0 was classified as 1 of 1,
+classified as 0. 
+
+这种方法是使用算法在测试集和训练集上误分类的比例来衡量J test和J train，而不是使用逻辑损失函数来计算测试误差和训练误差。具体而言，在测试集上，你可以让算法对每个测试示例进行预测，输出1或0。回忆一下，如果f(x)大于等于4.5，我们会预测y_hat为1，如果小于0.5，我们会预测为0。然后你可以统计在测试集中y_hat与实际标签不同的例子的比例。例如，如果你正在通过分类任务对手写数字0或1进行分类，J test将是在测试集中被错误分类的0和1的比例。
+
+And similarly, J train is a fraction of the training
+set that has been misclassified. Taking a dataset and splitting it into a
+training set and a separate test set gives you a way to systematically evaluate
+how well your learning outcomes doing. By computing both J tests and J train, you can now measure how was doing on
+the test set and on the training set. This procedure is one step to what you'll
+be able to automatically choose what model to use for
+a given machine learning application. For example, if you're trying
+to predict housing prices, should you fit a straight
+line to your data, or fit a second order polynomial, or
+third order fourth order polynomial? It turns out that with one further
+refinement to the idea you saw in this video, you'll be able to have an algorithm
+help you to automatically make that type of decision well. Let's take a look at how to
+do that in the next video.
+
+
+类似地，J train是在训练集中被错误分类的比例。将数据集分成训练集和测试集可以系统地评估学习算法的表现。通过计算J test和J train，你可以衡量算法在测试集和训练集上的表现。这个过程是自动选择用于给定机器学习应用的模型的一个步骤。例如，如果你正在尝试预测房价，你应该对数据进行直线拟合，还是二次、三次或四次多项式拟合？通过对这个视频中介绍的思想进行进一步的改进，你将能够让算法帮助你自动做出这种决策。在下一个视频中，我们来看看如何实现这一点。
